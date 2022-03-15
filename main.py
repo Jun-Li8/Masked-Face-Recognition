@@ -3,6 +3,7 @@ import cv2
 import numpy as np
 import pickle
 from keras.models import load_model
+from twilio.rest import Client 
 
 def WriteVideo(write_path, frames, fps):
     if len(frames) == 0:
@@ -17,6 +18,9 @@ def WriteVideo(write_path, frames, fps):
 
     out_vid.release()
 
+account_sid = 'ACbee2a177562d77bda3b14b9cde6e9370'
+auth_token = '4664f9bc2f63e444bab066438eccc9fe' 
+client = Client(account_sid, auth_token)
 
 model=load_model("VGG19/model3-006.model")
 
@@ -127,6 +131,11 @@ while True:
         if conf <= 130:
             if in_violation:
                 cv2.putText(im, f"STAND BACK {labels[label]}", (x,y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255,255,255), 2)
+                message = client.messages.create(  
+                              messaging_service_sid='MGdffe67f123ee87804ccaf812cad3448b', 
+                              body='You have violated Social Distancing Guidelines. Please Wear your Bask',      
+                              to='+13124592527' 
+                          ) 
             else:
                 cv2.putText(im, f"{labels_dict[mask_label]}: {labels[label]}", (x,y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (255,255,255), 2)
         else:
