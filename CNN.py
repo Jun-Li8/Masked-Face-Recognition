@@ -18,8 +18,8 @@ def WriteVideo(write_path, frames, fps):
 
     out_vid.release()
 
-account_sid = 'ACbee2a177562d77bda3b14b9cde6e9370'
-auth_token = '4664f9bc2f63e444bab066438eccc9fe' 
+account_sid = 'secret'
+auth_token = 'token' 
 client = Client(account_sid, auth_token)
 
 message = client.messages.create(  
